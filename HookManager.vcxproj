@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -172,6 +172,14 @@
     <ClInclude Include="IATHookManager.h" />
     <ClInclude Include="MinHookManager.h" />
     <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SigScan\SigScan.vcxproj">
+      <Project>{29a892eb-fb40-4038-bddb-193d0beef4a1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StringUtils\StringUtils.vcxproj">
+      <Project>{9211c64d-6e62-43fa-8888-d96e87fb1c34}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
