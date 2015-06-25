@@ -15,7 +15,19 @@
 
 #include "Hook.h"
 
-#pragma comment(lib, "detours.lib")
+#ifdef _DEBUG
+	#ifdef _M_X64
+		#pragma comment(lib, "detours.x64d.lib")
+	#else
+		#pragma comment(lib, "detours.x86d.lib")
+	#endif
+#else
+	#ifdef _M_X64
+		#pragma comment(lib, "detours.x64.lib")
+	#else
+		#pragma comment(lib, "detours.x86.lib")
+	#endif
+#endif // _DEBUG
 
 namespace HookEngineLib
 {
