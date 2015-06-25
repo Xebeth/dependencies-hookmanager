@@ -62,13 +62,13 @@ namespace HookEngineLib
 
 			if (m_pTrampolineAsm != NULL)
 			{
-				DWORD JmpOpOffset = OpCodesSize_in + STACK_FRAME_OPCODES_SIZE;	// offset of the JMP instruction
-				DWORD JmpAddrOffset = JmpOpOffset + 1;							// offset of the JMP address operand
+				DWORD_PTR JmpOpOffset = OpCodesSize_in + STACK_FRAME_OPCODES_SIZE;	// offset of the JMP instruction
+				DWORD_PTR JmpAddrOffset = JmpOpOffset + 1;							// offset of the JMP address operand
 				// relative 32-bit JMP
-				DWORD HookRelAddr = (pSrc_in + OpCodesSize_in)							// Source address
-								  - (m_pTrampolineAsm + JmpOpOffset + JMP_OPCODE_SIZE);	// Destination address
-				DWORD TrampolineRelAddr = pDst_in										// Source address
-										- (pSrc_in + TRAMPOLINE_OPCODES_SIZE);			// Destination address
+				DWORD_PTR HookRelAddr = (pSrc_in + OpCodesSize_in)							// Source address
+									  - (m_pTrampolineAsm + JmpOpOffset + JMP_OPCODE_SIZE);	// Destination address
+				DWORD_PTR TrampolineRelAddr = pDst_in										// Source address
+											- (pSrc_in + TRAMPOLINE_OPCODES_SIZE);			// Destination address
 
 				// write the hook code
 				m_pTrampolineAsm[0] = OPCODE_POP_EAX;							// POP EAX
@@ -79,7 +79,7 @@ namespace HookEngineLib
 						 pSrc_in, OpCodesSize_in);
 				m_pTrampolineAsm[JmpOpOffset] = OPCODE_JMP;						// JMP
 				// jump offset
-				*(DWORD*)(m_pTrampolineAsm + JmpAddrOffset) = HookRelAddr;
+				*(DWORD_PTR*)(m_pTrampolineAsm + JmpAddrOffset) = HookRelAddr;
 
 				// detour the source function call : push ECX (this) on the stack
 				pSrc_in[0] = OPCODE_POP_EAX;							// POP EAX
@@ -87,7 +87,7 @@ namespace HookEngineLib
 				pSrc_in[2] = OPCODE_PUSH_EAX;							// PUSH EAX
 				pSrc_in[3] = OPCODE_JMP;								// JMP
 				// jump offset
-				*(DWORD*)(pSrc_in + 4) = TrampolineRelAddr;
+				*(DWORD_PTR*)(pSrc_in + 4) = TrampolineRelAddr;
 				// NOP any opcode that wasn't overwritten by the hook
 				memset(pSrc_in + TRAMPOLINE_OPCODES_SIZE, OPCODE_NOP, OpCodesSize_in - TRAMPOLINE_OPCODES_SIZE);
 
