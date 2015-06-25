@@ -42,9 +42,17 @@
 #endif
 
 #ifdef _DEBUG
-	#pragma comment(lib, "HookManager.x86d.lib")
+	#ifdef _M_X64
+		#pragma comment(lib, "HookManager.x64d.lib")
+	#else
+		#pragma comment(lib, "HookManager.x86d.lib")
+	#endif
 #else
-	#pragma comment(lib, "HookManager.x86.lib")
+	#ifdef _M_X64
+		#pragma comment(lib, "HookManager.x64.lib")
+	#else
+		#pragma comment(lib, "HookManager.x86.lib")
+	#endif
 #endif // _DEBUG
 
 #undef _HOOK_MANAGER_SDK_INCLUDE_
