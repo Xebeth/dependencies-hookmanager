@@ -381,14 +381,13 @@ namespace HookEngineLib
 			{
 				DWORD dwPageAccess;
 
-				VirtualProtect(pSrc_in, OpCodesSize_in, PAGE_READWRITE, &dwPageAccess);
+				if (VirtualProtect(pSrc_in, OpCodesSize_in, PAGE_READWRITE, &dwPageAccess))
+				{
+					// restore the original function
+					pDetour->SetRetour(pSrc_in, OpCodesSize_in);
 
-				// restore the original function
-				pDetour->SetRetour(pSrc_in, OpCodesSize_in);
-
-				VirtualProtect(pSrc_in, OpCodesSize_in, dwPageAccess, &dwPageAccess);
-
-				return true;
+					return (VirtualProtect(pSrc_in, OpCodesSize_in, dwPageAccess, &dwPageAccess) != FALSE);
+				}
 			}
 		}
 
