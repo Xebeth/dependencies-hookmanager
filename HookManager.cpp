@@ -144,7 +144,7 @@ namespace HookEngineLib
 					if (pHook_in_out->m_dwOpCodesSize == 0)
 					{
 						// flag the hook has uninstalled if no error occurred
-						pHook_in_out->m_bInstalled = DestroyHook(pHook_in_out);
+						pHook_in_out->m_bInstalled = !DestroyHook(pHook_in_out);
 					}
 					else
 					{

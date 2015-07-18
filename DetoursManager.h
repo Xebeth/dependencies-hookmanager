@@ -18,13 +18,15 @@ namespace HookEngineLib
 {
 	class DetoursManager : public IHookManager
 	{
+	public:
+		bool CommitTransaction();
+		bool BeginTransaction();
+
 	protected:
 		LPVOID FindModuleFunction(const char *pModuleName_in, const char *pFuncName_in);
 
 		bool DestroyHook(const Hook *pHook_in);
 		bool CreateHook(Hook *pHook_in_out);
-		bool CommitTransaction();
-		bool BeginTransaction();
 	};
 }
 

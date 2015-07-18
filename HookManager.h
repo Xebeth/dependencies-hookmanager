@@ -56,6 +56,15 @@ namespace HookEngineLib
 
 		virtual void Shutdown();
 
+		/*! \brief Ends the installation process
+			\return true if the termination succeeded; false otherwise
+		*/
+		virtual bool CommitTransaction() { return true; }
+		/*! \brief Commits the installation process
+			\return true if the commit succeeded; false otherwise
+		*/
+		virtual bool BeginTransaction() { return true; }
+
 	protected:
 		virtual LPVOID FindModuleFunction(const char *pModuleName_in, const char *pFuncName_in);
 
@@ -73,14 +82,6 @@ namespace HookEngineLib
 			\return true if the initialization succeeded; false otherwise
 		*/
 		virtual bool Initialize() { return true; }
-		/*! \brief Ends the installation process
-		\return true if the termination succeeded; false otherwise
-		*/
-		virtual bool CommitTransaction() { return true; }
-		/*! \brief Commits the installation process
-			\return true if the commit succeeded; false otherwise
-		*/
-		virtual bool BeginTransaction() { return true; }
 
 		bool UnregisterHook(HookPtrMap::const_iterator &Iter_in_out);
 		bool UninstallHook(Hook *pHook_in_out);

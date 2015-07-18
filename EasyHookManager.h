@@ -20,13 +20,13 @@ namespace HookEngineLib
 	class EasyHookManager : public IHookManager
 	{
 	public:
+		bool CommitTransaction();
+		bool BeginTransaction();
 		void Shutdown();
 
 	protected:
 		bool DestroyHook(const Hook *pHook_in);
 		bool CreateHook(Hook *pHook_in_out);
-		bool CommitTransaction();
-		bool BeginTransaction();
 		bool Initialize();
 
 		//! EasyHook trace structure
