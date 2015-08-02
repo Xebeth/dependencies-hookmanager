@@ -11,7 +11,6 @@
 // #define __USE_VLD
 #include <stdhdr.h>
 
-#include <hash_map>
 #include <StringUtils.h>
 #include <MemoryScanner.h>
 
