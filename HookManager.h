@@ -22,7 +22,7 @@ namespace HookEngineLib
 	class MemberDetourAsm;
 	class Hook;
 
-	typedef hash_map<char, Hook*> HookPtrMap;
+	typedef hash_map<std::string, Hook*> HookPtrMap;
 
 	//! \brief Manager controlling the installation/removal of hooks
 	class IHookManager : public NonCopyable
