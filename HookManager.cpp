@@ -38,14 +38,14 @@ namespace HookEngineLib
 		{
 			HookPtrMap::const_iterator HookIt, HookEndIt = m_HookMap.cend();
 			bool bResult = true;
-			Hook *pHook = NULL;
+			Hook *pHook = nullptr;
 
 			for (HookIt = m_HookMap.cbegin(); HookIt != HookEndIt; ++HookIt)
 			{
 				pHook = HookIt->second;
 
-				if (pHook != NULL && pHook->m_bInstalled == false)
-					bResult &= (InstallHook(pHook) != NULL);
+				if (pHook != nullptr && pHook->m_bInstalled == false)
+					bResult &= (InstallHook(pHook) != nullptr);
 			}
 
 			return (CommitTransaction() && bResult);
@@ -64,13 +64,13 @@ namespace HookEngineLib
 			HookPtrMap::const_iterator HookIt = m_HookMap.cbegin();
 			HookPtrMap::const_iterator EndIt = m_HookMap.cend();
 			bool bResult = true;
-			Hook *pHook = NULL;
+			Hook *pHook = nullptr;
 
 			while (HookIt != EndIt)
 			{
 				pHook = HookIt->second;
 
-				if (pHook != NULL && UnregisterHook(HookIt) == false)
+				if (pHook != nullptr && UnregisterHook(HookIt) == false)
 				{
 					bResult = false;
 					++HookIt;
@@ -89,16 +89,16 @@ namespace HookEngineLib
 	*/
 	LPVOID IHookManager::InstallHook(Hook *pHook_in_out)
 	{
-		if (pHook_in_out != NULL)
+		if (pHook_in_out != nullptr)
 		{
-			if (pHook_in_out->m_pOriginalFunc == NULL)
+			if (pHook_in_out->m_pOriginalFunc == nullptr)
 			{
 				// try to find the function automatically
 				pHook_in_out->m_pOriginalFunc = FindModuleFunction(pHook_in_out->m_sModuleName.c_str(),
 																   pHook_in_out->m_sFuncName.c_str());
 			}
 
-			if (pHook_in_out->m_pOriginalFunc != NULL && pHook_in_out->m_pHookFunc != NULL)
+			if (pHook_in_out->m_pOriginalFunc != nullptr && pHook_in_out->m_pHookFunc != nullptr)
 			{
 				// if the hook isn't already installed
 				if (pHook_in_out->m_bInstalled == false)
@@ -116,7 +116,7 @@ namespace HookEngineLib
 																		  (LPBYTE)pHook_in_out->m_pHookFunc,
 																		  pHook_in_out->m_dwOpCodesSize);
 						// flag the hook has been installed (no real way to check success)
-						pHook_in_out->m_bInstalled = (pHook_in_out->m_pTrampolineFunc != NULL);
+						pHook_in_out->m_bInstalled = (pHook_in_out->m_pTrampolineFunc != nullptr);
 					}
 				}
 			}
@@ -124,7 +124,7 @@ namespace HookEngineLib
 			return pHook_in_out->m_pTrampolineFunc;
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	/*! \brief Uninstalls the specified hook using Detours
@@ -133,9 +133,9 @@ namespace HookEngineLib
 	*/
 	bool IHookManager::UninstallHook(Hook *pHook_in_out)
 	{
-		if (pHook_in_out != NULL)
+		if (pHook_in_out != nullptr)
 		{
-			if (pHook_in_out->m_pOriginalFunc != NULL && pHook_in_out->m_pHookFunc != NULL)
+			if (pHook_in_out->m_pOriginalFunc != nullptr && pHook_in_out->m_pHookFunc != nullptr)
 			{
 				// if the hook is installed
 				if (pHook_in_out->m_bInstalled)
@@ -174,7 +174,7 @@ namespace HookEngineLib
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
 		// clean up the previous instance
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			UninstallHook(HookIt->second);
 
 		m_HookMap[pFuncName_in] = new Hook(pFuncName_in, pModuleName_in, pOriginalFunc_in, pHookFunc_in, dwOpCodeSize_in);
@@ -192,7 +192,7 @@ namespace HookEngineLib
 									const char* pPattern_in, int Offset_in, 
 									LPVOID pHookFunc_in, DWORD dwOpCodeSize_in)
 	{
-		if (pPattern_in != NULL && pModuleName_in != NULL && pFuncName_in != NULL && pHookFunc_in != NULL)
+		if (pPattern_in != nullptr && pModuleName_in != nullptr && pFuncName_in != nullptr && pHookFunc_in != nullptr)
 		{
 			std::string ModuleName(pModuleName_in);
 			string_t ProcessName;
@@ -231,7 +231,7 @@ namespace HookEngineLib
 		{
 			Hook *pHook = Iter_in_out->second;
 
-			if (pHook != NULL && pHook->m_bInstalled)
+			if (pHook != nullptr && pHook->m_bInstalled)
 				return UninstallHook(pHook);
 		}
 
@@ -246,10 +246,10 @@ namespace HookEngineLib
 	{
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			return HookIt->second->m_pOriginalFunc;
 		else
-			return NULL;
+			return nullptr;
 	}
 
 	/*! \brief Retrieves the hook function given the hook name
@@ -260,10 +260,10 @@ namespace HookEngineLib
 	{
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			return HookIt->second->m_pHookFunc;
 		else
-			return NULL;
+			return nullptr;
 	}
 
 	/*! \brief Retrieves the trampoline function given the hook name
@@ -274,10 +274,10 @@ namespace HookEngineLib
 	{
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			return HookIt->second->m_pTrampolineFunc;
 		else
-			return NULL;
+			return nullptr;
 	}
 
 	/*! \brief Installs a hook given its name
@@ -287,10 +287,10 @@ namespace HookEngineLib
 	{
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			return InstallHook(HookIt->second);
 
-		return NULL;
+		return nullptr;
 	}
 
 	/*! \brief Checks if the hook specified by the function name is installed
@@ -323,7 +323,7 @@ namespace HookEngineLib
 	{
 		HookPtrMap::const_iterator HookIt = m_HookMap.find(pFuncName_in);
 
-		if (HookIt != m_HookMap.cend() && HookIt->second != NULL)
+		if (HookIt != m_HookMap.cend() && HookIt->second != nullptr)
 			return UninstallHook(HookIt->second);
 
 		return false;
@@ -339,7 +339,7 @@ namespace HookEngineLib
 	*/
 	LPVOID IHookManager::DetourClassFunc(LPBYTE pSrc_in, const LPBYTE pDst_in, DWORD OpCodesSize_in)
 	{
-		LPVOID pTrampoline = NULL;
+		LPVOID pTrampoline = nullptr;
 
 		if (OpCodesSize_in >= TRAMPOLINE_OPCODES_SIZE)
 		{
@@ -377,7 +377,7 @@ namespace HookEngineLib
 		{
 			MemberDetourAsm *pDetour = DetourIt->second;
 
-			if (pDetour != NULL)
+			if (pDetour != nullptr)
 			{
 				DWORD dwPageAccess;
 
@@ -397,19 +397,19 @@ namespace HookEngineLib
 	/*! \brief Finds a function within the specified module
 		\param[in] pModuleName_in : the name of the module exporting the function
 		\param[in] pFuncName_in : the name of the function to find
-		\return the address of the function if found; NULL otherwise
+		\return the address of the function if found; nullptr otherwise
 	*/
 	LPVOID IHookManager::FindModuleFunction(const char *pModuleName_in, const char *pFuncName_in)
 	{
-		if (pFuncName_in != NULL && pModuleName_in != NULL)
+		if (pFuncName_in != nullptr && pModuleName_in != nullptr)
 		{
-			HMODULE hModule = ::LoadLibraryExA(pModuleName_in, NULL, 0);
+			HMODULE hModule = ::LoadLibraryExA(pModuleName_in, nullptr, 0);
 
-			if (hModule != NULL)
+			if (hModule != nullptr)
 				return ::GetProcAddress(hModule, pFuncName_in);
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	SigScan::SigScan& IHookManager::GetSigScan()

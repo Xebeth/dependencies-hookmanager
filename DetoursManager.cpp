@@ -58,7 +58,7 @@ namespace HookEngineLib
 	{
 		// use Detours to install the hook
 		return (::DetourAttachEx(&(LPVOID&)pHook_in_out->m_pOriginalFunc, pHook_in_out->m_pHookFunc,
-								 &(DETOUR_TRAMPOLINE*&)pHook_in_out->m_pTrampolineFunc, NULL, NULL) == NO_ERROR);
+								 &(DETOUR_TRAMPOLINE*&)pHook_in_out->m_pTrampolineFunc, nullptr, nullptr) == NO_ERROR);
 	}
 
 	/*! \brief Destroys a hook by restoring the original function
@@ -75,14 +75,14 @@ namespace HookEngineLib
 	/*! \brief Finds a function within the specified module
 		\param[in] pModuleName_in : the name of the module exporting the function
 		\param[in] pFuncName_in : the name of the function to find
-		\return the address of the function if found; NULL otherwise
+		\return the address of the function if found; nullptr otherwise
 	*/
 	LPVOID DetoursManager::FindModuleFunction(const char *pModuleName_in, const char *pFuncName_in)
 	{
-		if (pFuncName_in != NULL && pModuleName_in != NULL)
+		if (pFuncName_in != nullptr && pModuleName_in != nullptr)
 			return ::DetourFindFunction(pModuleName_in, pFuncName_in);
 		
-		return NULL;
+		return nullptr;
 	}
 }
 

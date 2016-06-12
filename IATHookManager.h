@@ -21,7 +21,7 @@ namespace HookEngineLib
 	{
 	public:
 		//! \brief IATHookManager default constructor
-		IATHookManager() : IHookManager(), m_hProcess(NULL) {}
+		IATHookManager() : IHookManager(), m_hProcess(nullptr) {}
 
 		void Shutdown();
 

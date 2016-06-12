@@ -12,8 +12,8 @@
 namespace HookEngineLib
 {
 	//! \brief Hook default constructor
-	Hook::Hook() : m_pTrampolineFunc(NULL), m_pOriginalFunc(NULL),
-		m_pHookFunc(NULL), m_bInstalled(false), m_dwOpCodesSize(0) {}
+	Hook::Hook() : m_pTrampolineFunc(nullptr), m_pOriginalFunc(nullptr),
+		m_pHookFunc(nullptr), m_bInstalled(false), m_dwOpCodesSize(0) {}
 
 	/*! \brief Hook constructor
 		\param[in] pFuncName_in : the name of the target function
@@ -25,21 +25,21 @@ namespace HookEngineLib
 	Hook::Hook(const char* pFuncName_in, const char* pModuleName_in,
 			   LPVOID pOriginalFunc_in, LPVOID pHookFunc_in, DWORD dwOpCodeSize_in)
 		: m_sFuncName(pFuncName_in), m_sModuleName(pModuleName_in), m_pOriginalFunc(pOriginalFunc_in),
-		  m_pHookFunc(pHookFunc_in), m_dwOpCodesSize(dwOpCodeSize_in), m_bInstalled(false), m_pTrampolineFunc(NULL) {}
+		  m_pHookFunc(pHookFunc_in), m_dwOpCodesSize(dwOpCodeSize_in), m_bInstalled(false), m_pTrampolineFunc(nullptr) {}
 
 	//! \brief MemberDetourAsm default constructor
 	MemberDetourAsm::MemberDetourAsm()
-		: m_pTrampolineAsm(NULL),
-		  m_pOriginalAddr(NULL),
+		: m_pTrampolineAsm(nullptr),
+		  m_pOriginalAddr(nullptr),
 		  m_TrampolineSize(0UL) {}
 
 	//! \brief MemberDetourAsm destructor
 	MemberDetourAsm::~MemberDetourAsm()
 	{
-		if (m_pTrampolineAsm != NULL)
+		if (m_pTrampolineAsm != nullptr)
 		{
 			free(m_pTrampolineAsm);
-			m_pTrampolineAsm = NULL;
+			m_pTrampolineAsm = nullptr;
 		}
 	}
 
@@ -52,7 +52,7 @@ namespace HookEngineLib
 	*/
 	bool MemberDetourAsm::SetDetour(LPBYTE pSrc_in, const LPBYTE pDst_in, DWORD OpCodesSize_in)
 	{
-		if (pSrc_in != NULL && pDst_in != NULL && OpCodesSize_in >= TRAMPOLINE_OPCODES_SIZE)
+		if (pSrc_in != nullptr && pDst_in != nullptr && OpCodesSize_in >= TRAMPOLINE_OPCODES_SIZE)
 		{
 			m_TrampolineSize = (OpCodesSize_in + TRAMPOLINE_OPCODES_SIZE);
 			
@@ -60,7 +60,7 @@ namespace HookEngineLib
 			m_pTrampolineAsm = (LPBYTE)malloc(m_TrampolineSize * sizeof(BYTE));
 			memset(m_pTrampolineAsm, OPCODE_NOP, m_TrampolineSize * sizeof(BYTE));
 
-			if (m_pTrampolineAsm != NULL)
+			if (m_pTrampolineAsm != nullptr)
 			{
 				DWORD_PTR JmpOpOffset = OpCodesSize_in + STACK_FRAME_OPCODES_SIZE;	// offset of the JMP instruction
 				DWORD_PTR JmpAddrOffset = JmpOpOffset + 1;							// offset of the JMP address operand
@@ -106,7 +106,7 @@ namespace HookEngineLib
 	*/
 	bool MemberDetourAsm::SetRetour(LPBYTE pSrc_in, DWORD OpCodesSize_in)
 	{
-		if (m_pTrampolineAsm != NULL && m_pOriginalAddr == pSrc_in
+		if (m_pTrampolineAsm != nullptr && m_pOriginalAddr == pSrc_in
 		 && OpCodesSize_in == (m_TrampolineSize - TRAMPOLINE_OPCODES_SIZE))
 		{
 			LPBYTE pSrcOpcodes = m_pTrampolineAsm + STACK_FRAME_OPCODES_SIZE;

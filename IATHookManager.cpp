@@ -36,8 +36,8 @@ namespace HookEngineLib
 	*/
 	bool IATHookManager::Initialize()
 	{
-		m_hProcess = GetModuleHandle(NULL);
-		m_bInit = (m_hProcess != NULL);
+		m_hProcess = GetModuleHandle(nullptr);
+		m_bInit = (m_hProcess != nullptr);
 
 		return m_bInit;
 	}
@@ -48,7 +48,7 @@ namespace HookEngineLib
 	void IATHookManager::Shutdown()
 	{
 		IHookManager::Shutdown();
-		m_hProcess = NULL;
+		m_hProcess = nullptr;
 	}
 
 	/*! \brief Creates a hook by patching the original function
