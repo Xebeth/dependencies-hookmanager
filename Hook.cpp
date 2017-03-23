@@ -58,7 +58,6 @@ namespace HookEngineLib
 			
 			m_pOriginalAddr = pSrc_in;
 			m_pTrampolineAsm = (LPBYTE)malloc(m_TrampolineSize * sizeof(BYTE));
-			memset(m_pTrampolineAsm, OPCODE_NOP, m_TrampolineSize * sizeof(BYTE));
 
 			if (m_pTrampolineAsm != nullptr)
 			{
@@ -69,8 +68,9 @@ namespace HookEngineLib
 									  - (m_pTrampolineAsm + JmpOpOffset + JMP_OPCODE_SIZE);	// Destination address
 				DWORD_PTR TrampolineRelAddr = pDst_in										// Source address
 											- (pSrc_in + TRAMPOLINE_OPCODES_SIZE);			// Destination address
-
 				// write the hook code
+				memset(m_pTrampolineAsm, OPCODE_NOP, m_TrampolineSize * sizeof(BYTE));
+
 				m_pTrampolineAsm[0] = OPCODE_POP_EAX;							// POP EAX
 				m_pTrampolineAsm[1] = OPCODE_POP_ECX;							// POP ECX
 				m_pTrampolineAsm[2] = OPCODE_PUSH_EAX;							// PUSH EAX
