@@ -8,7 +8,7 @@
 #ifndef __HOOK_ENGINE_H__
 #define __HOOK_ENGINE_H__
 
-#include <hash_map.h>
+#include <unordered_map>
 
 #include <MemoryScanner.h>
 #include <NonCopyable.h>

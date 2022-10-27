@@ -16,9 +16,9 @@
 
 #ifdef _DEBUG
 	#define __USE_DETOURS
-	#define __USE_MINHOOK
-	#define __USE_EASYHOOK
-	#define __USE_IATHOOK
+//	#define __USE_MINHOOK
+//	#define __USE_EASYHOOK
+//	#define __USE_IATHOOK
 #else
 	#define __USE_DETOURS
 //	#define __USE_MINHOOK
